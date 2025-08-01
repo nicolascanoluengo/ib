@@ -45,6 +45,24 @@ const parseFeedbackText = (feedbackString) => {
   }
 };
 
+useEffect(() => {
+  const fetchSubmission = async () => {
+    const { data, error } = await supabase
+      .from('Submissions')
+      .select('*') // o explícitamente .select('id, feedback, ...')
+      .eq('id', submissionId)
+      .single();
+
+    if (error) {
+      console.error('Error fetching submission:', error);
+    } else {
+      setSubmission(data);
+    }
+  };
+
+  fetchSubmission();
+}, []);
+
 
 const GradeBar = ({ grade, maxGrade = 7 }) => {
   const percentage = maxGrade > 0 ? (grade / maxGrade) * 100 : 0;
@@ -305,3 +323,18 @@ const ResultsPage = () => {
 };
 
 export default ResultsPage;
+
+{submission?.feedback && (
+  <div className="mt-6">
+    <a
+      href={submission.feedback}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+    >
+      📄 Ver Feedback en PDF
+    </a>
+  </div>
+)}
+
+console.log('URL del feedback PDF:', submission?.feedback);
