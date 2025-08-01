@@ -170,6 +170,34 @@ const ResultsPage = () => {
   const isPremium = submission.feedback_type === 'premium';
 
   return (
+  <div className="p-6">
+    <h1 className="text-2xl font-bold mb-4">Feedback Breakdown</h1>
+
+    <p className="mb-4"><strong>Final Grade:</strong> {feedbackData.finalGrade ?? 'N/A'} / 7</p>
+    <p className="mb-4"><strong>Composite Score:</strong> {feedbackData.compositeScore ?? 'N/A'} / {feedbackData.compositeMax ?? 'N/A'}</p>
+
+    <div className="mt-6">
+      <h2 className="text-xl font-semibold mb-2">By Criterion:</h2>
+      <ul className="list-disc list-inside">
+        {feedbackData.criteria.map((crit, idx) => (
+          <li key={idx} className="mb-1">
+            {crit.name}: {crit.score} / {crit.maxScore}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div className="mt-6">
+      <h2 className="text-xl font-semibold mb-2">Full Feedback Text:</h2>
+      <pre className="bg-gray-100 p-4 rounded whitespace-pre-wrap">
+        {feedbackData.fullText}
+      </pre>
+    </div>
+  </div>
+);
+}
+
+  return (
     <>
       <Helmet>
         <title>{isPremium ? 'Premium Feedback' : 'Your Free Grade'} - IB Assessment AI</title>
