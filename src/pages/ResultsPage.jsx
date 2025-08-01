@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabaseClient'
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams, useNavigate, Link } from 'react-router-dom';
